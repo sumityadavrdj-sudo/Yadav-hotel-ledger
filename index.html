@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123c32">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<title>Yadav Hotel | हिसाब-किताब</title>
+<style>
+:root{--green:#145342;--green2:#1f765d;--bg:#f3f6f4;--card:#fff;--ink:#17231f;--muted:#687770;--line:#e1e9e4;--red:#b94141;--amber:#a86a13;--shadow:0 5px 20px #163b2c0b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px system-ui,-apple-system,"Noto Sans Devanagari",sans-serif}
+header{background:linear-gradient(120deg,#103d32,#20745a);color:#fff;padding:20px max(16px,calc((100% - 1120px)/2));}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand h1{font-size:21px;margin:0}.brand small{opacity:.8}.wrap{max-width:1120px;margin:auto;padding:16px}
+nav{display:flex;gap:8px;overflow:auto;padding:12px 0 4px;scrollbar-width:none}nav button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:9px 14px;font-weight:650}nav button.active{background:var(--green);color:white;border-color:var(--green)}
+.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:var(--shadow);margin-bottom:12px}.kpi .label{color:var(--muted);font-size:13px}.kpi strong{display:block;font-size:24px;margin-top:5px}.green{color:var(--green2)}.red{color:var(--red)}.muted{color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+h2{font-size:19px;margin:4px 0 14px}h3{font-size:16px;margin:0 0 12px}
+label{display:block;font-size:13px;font-weight:650;margin:10px 0 5px;color:#40524a}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d5e0d9;border-radius:10px;background:#fff;font:inherit;color:var(--ink)}input:focus,select:focus{outline:2px solid #b8d9c9;border-color:var(--green2)}
+button.primary{background:var(--green);color:#fff;border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}button.secondary{background:#edf4ef;color:var(--green);border:1px solid #d7e7dc;border-radius:10px;padding:10px 13px;font-weight:650;cursor:pointer}button.danger{background:#fff0f0;color:var(--red);border:1px solid #f0d2d2;border-radius:9px;padding:7px 10px}
+form .actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.hint{font-size:12px;color:var(--muted);line-height:1.5}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:650;background:#fafcfb}td:last-child,th:last-child{text-align:right}.empty{padding:22px;text-align:center;color:var(--muted)}.bar{height:10px;background:#edf2ee;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:#2d896b;border-radius:99px}.pill{font-size:11px;background:#edf5f0;color:#23644e;border-radius:99px;padding:4px 8px}.chart{width:100%;height:220px;display:block}.chartbox{padding-top:8px}.splitline{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:9px 0;font-size:14px}.splitline.total{font-weight:800;border-bottom:0;font-size:16px}.alert{background:#fff8e9;border:1px solid #f2dfb8;border-radius:12px;padding:11px;font-size:13px;color:#785015;line-height:1.5}.success{background:#eef7f1;border:1px solid #d7e9dc;border-radius:12px;padding:11px;font-size:13px;color:#245a40}
+footer{padding:20px 0 40px;color:var(--muted);font-size:12px;text-align:center}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.three{grid-template-columns:1fr 1fr}.wrap{padding:12px}.kpi strong{font-size:21px}}
+@media(max-width:390px){.three{grid-template-columns:1fr}.brand h1{font-size:18px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div><h1>YADAV HOTEL</h1><small>दैनिक हिसाब · खरीद · मजदूरी · P&amp;L</small></div><span class="pill">स्थानीय हिसाब</span></div></header>
+<div class="wrap">
+<nav id="nav">
+<button class="active" data-page="dashboard">डैशबोर्ड</button><button data-page="daily">दैनिक एंट्री</button><button data-page="purchase">खरीद / सप्लायर</button><button data-page="labour">मजदूरी</button><button data-page="stock">स्टॉक</button><button data-page="reports">रिपोर्ट / P&amp;L</button><button data-page="backup">बैकअप</button>
+</nav>
+<section id="dashboard" class="page active">
+<div class="row"><div><h2>बिजनेस डैशबोर्ड</h2><div class="muted" id="todayLabel"></div></div><button class="secondary" onclick="go('daily')">＋ नई एंट्री</button></div>
+<div class="grid">
+<div class="card kpi"><div class="label">आज की बिक्री</div><strong class="green" id="kSales">₹0</strong></div>
+<div class="card kpi"><div class="label">आज के खर्च</div><strong id="kExpense">₹0</strong></div>
+<div class="card kpi"><div class="label">इस महीने टर्नओवर</div><strong id="kTurnover">₹0</strong></div>
+<div class="card kpi"><div class="label">महीने का अनुमानित P&amp;L</div><strong id="kProfit">₹0</strong></div>
+</div>
+<div class="two">
+<div class="card chartbox"><div class="row"><h3>पिछले 7 दिनों की बिक्री</h3><span class="pill">₹</span></div><canvas id="salesChart" class="chart"></canvas></div>
+<div class="card"><h3>महीने का सारांश</h3><div class="splitline"><span>बिक्री</span><b id="mSales">₹0</b></div><div class="splitline"><span>माल की खरीद</span><b id="mPurchases">₹0</b></div><div class="splitline"><span>अन्य खर्च + मजदूरी</span><b id="mExpenses">₹0</b></div><div class="splitline"><span>सप्लायर बकाया</span><b id="mPayable">₹0</b></div><div class="hint">P&amp;L की सही गणना के लिए स्टॉक का शुरुआती और अंतिम मूल्य दर्ज करें।</div></div>
+</div>
+<div class="card"><h3>हाल की एंट्री</h3><div id="recent"></div></div>
+</section>
+
+<section id="daily" class="page">
+<h2>दैनिक बिक्री और खर्च</h2>
+<div class="two">
+<div class="card"><h3>बिक्री दर्ज करें</h3><form id="saleForm">
+<label>तारीख</label><input type="date" id="saleDate" required>
+<label>कुल बिक्री (₹)</label><input type="number" id="saleAmount" min="0" step=".01" placeholder="जैसे 25000" required>
+<label>नकद बिक्री (₹)</label><input type="number" id="saleCash" min="0" step=".01" placeholder="अगर पूरा कैश है तो पूरी रकम">
+<label>UPI बिक्री (₹)</label><input type="number" id="saleUpi" min="0" step=".01" placeholder="अगर लागू हो">
+<div class="hint">नकद + UPI का योग कुल बिक्री के बराबर होना चाहिए। यदि विभाजन मालूम न हो तो दोनों खाली छोड़ें।</div>
+<div class="actions"><button class="primary">बिक्री सेव करें</button></div></form></div>
+<div class="card"><h3>अन्य खर्च दर्ज करें</h3><form id="expenseForm">
+<label>तारीख</label><input type="date" id="expDate" required>
+<label>खर्च का प्रकार</label><select id="expCategory"><option>सब्जी</option><option>गैस / ईंधन</option><option>बिजली / पानी</option><option>मरम्मत</option><option>किराया</option><option>सफाई / पैकिंग</option><option>अन्य</option><option>मालिक की निजी निकासी</option></select>
+<label>विवरण</label><input id="expNote" placeholder="किस चीज के लिए?">
+<label>रकम (₹)</label><input type="number" id="expAmount" min="0.01" step=".01" required>
+<div class="actions"><button class="primary">खर्च सेव करें</button></div></form></div>
+</div>
+<div class="card"><h3>दैनिक रिकॉर्ड</h3><div class="tablewrap" id="dailyTable"></div></div>
+</section>
+
+<section id="purchase" class="page">
+<h2>माल की खरीद और दुकानदारों का खाता</h2>
+<div class="two">
+<div class="card"><h3>नई खरीद दर्ज करें</h3><form id="purchaseForm">
+<label>तारीख</label><input type="date" id="purDate" required>
+<label>दुकानदार</label><input id="purSupplier" list="supplierList" placeholder="दुकानदार का नाम" required><datalist id="supplierList"></datalist>
+<label>सामान</label><input id="purItem" placeholder="तेल / मैदा / आलू..." required>
+<div class="three"><div><label>मात्रा</label><input id="purQty" type="number" step=".01" placeholder="मात्रा"></div><div><label>इकाई</label><select id="purUnit"><option>kg</option><option>लीटर</option><option>बोरी</option><option>पीस</option><option>अन्य</option></select></div><div><label>कुल कीमत ₹</label><input id="purAmount" type="number" min=".01" step=".01" required></div></div>
+<label>अभी भुगतान किया (₹)</label><input id="purPaid" type="number" min="0" step=".01" value="0">
+<div class="hint">बाकी रकम सप्लायर के खाते में बकाया बनेगी। खरीद की एंट्री P&amp;L में माल की लागत/स्टॉक के लिए होगी; भुगतान दोबारा खर्च नहीं बनेगा।</div>
+<div class="actions"><button class="primary">खरीद सेव करें</button></div></form></div>
+<div class="card"><h3>सप्लायर को भुगतान</h3><form id="payForm">
+<label>तारीख</label><input type="date" id="payDate" required>
+<label>दुकानदार</label><input id="paySupplier" list="supplierList" placeholder="दुकानदार का नाम" required>
+<label>भुगतान रकम (₹)</label><input id="payAmount" type="number" min=".01" step=".01" required>
+<label>तरीका</label><select id="payMode"><option>नकद</option><option>UPI</option><option>बैंक</option></select>
+<label>नोट / संदर्भ</label><input id="payNote" placeholder="वैकल्पिक">
+<div class="actions"><button class="primary">भुगतान दर्ज करें</button></div></form></div>
+</div>
+<div class="card"><h3>दुकानदारों का बकाया</h3><div id="supplierSummary"></div></div>
+<div class="card"><h3>सप्लायर लेनदेन</h3><div class="tablewrap" id="supplierTable"></div></div>
+</section>
+
+<section id="labour" class="page">
+<h2>कर्मचारी और डेली लेबर पेमेंट</h2>
+<div class="two">
+<div class="card"><h3>कर्मचारी जोड़ें</h3><form id="workerForm"><label>नाम</label><input id="workerName" required placeholder="कर्मचारी का नाम"><label>दैनिक मजदूरी (₹)</label><input id="workerRate" type="number" min="0" step=".01" required><div class="actions"><button class="primary">कर्मचारी जोड़ें</button></div></form></div>
+<div class="card"><h3>हाजिरी / मजदूरी दर्ज करें</h3><form id="wageForm"><label>तारीख</label><input id="wageDate" type="date" required><label>कर्मचारी</label><select id="wageWorker" required></select><label>काम के दिन (जैसे 1 या 0.5)</label><input id="wageDays" type="number" min="0" step=".5" value="1" required><label>मजदूरी बनी (₹)</label><input id="wageEarned" type="number" min="0" step=".01" required><label>आज भुगतान (₹)</label><input id="wagePaid" type="number" min="0" step=".01" value="0"><div class="actions"><button class="primary">मजदूरी सेव करें</button></div></form></div>
+</div>
+<div class="card"><h3>कर्मचारी का सारांश</h3><div id="workerSummary"></div></div>
+<div class="card"><h3>मजदूरी रिकॉर्ड</h3><div class="tablewrap" id="wageTable"></div></div>
+</section>
+
+<section id="stock" class="page">
+<h2>स्टॉक और माल की लागत</h2>
+<div class="alert">सही Net Profit निकालने के लिए महीने की शुरुआत और अंत में बचे माल का मूल्य दर्ज करें। खरीद और भुगतान अलग-अलग रखे जाते हैं।</div>
+<div class="two" style="margin-top:12px">
+<div class="card"><h3>स्टॉक का मूल्य दर्ज करें</h3><form id="stockForm"><label>तारीख</label><input id="stockDate" type="date" required><label>स्टॉक प्रकार</label><select id="stockType"><option value="opening">शुरुआती स्टॉक मूल्य</option><option value="closing">अंतिम स्टॉक मूल्य</option></select><label>कुल मूल्य (₹)</label><input id="stockValue" type="number" min="0" step=".01" required><div class="actions"><button class="primary">स्टॉक मूल्य सेव करें</button></div></form></div>
+<div class="card"><h3>स्टॉक रिकॉर्ड</h3><div id="stockTable"></div><p class="hint">अभी यह कुल स्टॉक वैल्यू दर्ज करता है। आइटम के हिसाब से मात्रा-आधारित स्टॉक अगला विस्तार हो सकता है।</p></div>
+</div>
+</section>
+
+<section id="reports" class="page">
+<h2>मासिक रिपोर्ट और P&amp;L</h2>
+<div class="card"><div class="row"><div><label style="margin-top:0">रिपोर्ट महीना</label><input type="month" id="reportMonth"></div><button class="secondary" onclick="renderReports()">रिपोर्ट देखें</button></div></div>
+<div class="grid">
+<div class="card kpi"><div class="label">टर्नओवर</div><strong id="rSales">₹0</strong></div>
+<div class="card kpi"><div class="label">माल की खपत (COGS)</div><strong id="rCogs">₹0</strong></div>
+<div class="card kpi"><div class="label">Gross Profit</div><strong class="green" id="rGross">₹0</strong></div>
+<div class="card kpi"><div class="label">Net Profit (अनुमान)</div><strong id="rNet">₹0</strong></div>
+</div>
+<div class="two">
+<div class="card"><h3>Profit &amp; Loss Statement</h3><div id="pnlRows"></div></div>
+<div class="card"><h3>बिजनेस अनुपात</h3><div id="ratios"></div></div>
+</div>
+<div class="card"><h3>महीने की बिक्री और खर्च</h3><canvas id="monthChart" class="chart"></canvas></div>
+<div class="card"><h3>सप्लायर और मजदूरी सारांश</h3><div id="reportExtra"></div></div>
+<button class="primary" onclick="exportCSV()">इस महीने की रिपोर्ट CSV में डाउनलोड करें</button>
+</section>
+
+<section id="backup" class="page">
+<h2>डेटा बैकअप और सुरक्षा</h2>
+<div class="alert">इस शुरुआती संस्करण में डेटा इसी ब्राउज़र/डिवाइस में सेव होता है। ऐप का डेटा मिटाने, ब्राउज़र बदलने या फोन बदलने से पहले बैकअप डाउनलोड करें। अभी अपने आप क्लाउड सिंक नहीं है।</div>
+<div class="card" style="margin-top:12px"><h3>पूरा बैकअप</h3><p class="hint">सभी बिक्री, खर्च, खरीद, भुगतान, मजदूरी और स्टॉक का JSON बैकअप डाउनलोड करें।</p><button class="primary" onclick="backup()">बैकअप डाउनलोड करें</button></div>
+<div class="card"><h3>बैकअप वापस लोड करें</h3><input type="file" id="restoreFile" accept=".json,application/json"><div class="actions"><button class="secondary" onclick="restore()">बैकअप इम्पोर्ट करें</button></div></div>
+<div class="card"><h3>डेटा की जानकारी</h3><div id="dataInfo" class="muted"></div><p class="hint">संवेदनशील व्यावसायिक रिकॉर्ड हैं—फोन लॉक रखें और बैकअप सुरक्षित जगह रखें।</p></div>
+</section>
+<footer>Yadav Hotel · सरल बिजनेस हिसाब · यह स्थानीय शुरुआती संस्करण है, टैक्स/ऑडिट सलाह का विकल्प नहीं।</footer>
+</div>
+<script>
+const KEY='yadav_hotel_accounting_v1';
+const blank=()=>({sales:[],expenses:[],purchases:[],payments:[],workers:[],wages:[],stocks:[]});
+let db=load();
+function load(){try{return {...blank(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){return blank()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll()}
+const $=id=>document.getElementById(id), num=v=>Number(v)||0, money=v=>'₹'+Math.round(num(v)).toLocaleString('en-IN'), today=()=>new Date().toISOString().slice(0,10), monthNow=()=>today().slice(0,7);
+function sum(a,fn){return a.reduce((s,x)=>s+fn(x),0)}
+function inMonth(x,m){return (x.date||'').slice(0,7)===m}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function go(p){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===p));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));if(p==='reports')renderReports();window.scrollTo(0,0)}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
+['saleDate','expDate','purDate','payDate','wageDate','stockDate'].forEach(id=>$(id).value=today());
+$('reportMonth').value=monthNow();
+$('saleForm').onsubmit=e=>{e.preventDefault();let amount=num($('saleAmount').value),cash=num($('saleCash').value),upi=num($('saleUpi').value);if((cash||upi)&&Math.abs(cash+upi-amount)>.01)return alert('नकद + UPI का योग कुल बिक्री के बराबर होना चाहिए।');db.sales.push({id:Date.now(),date:$('saleDate').value,amount,cash,upi});e.target.reset();$('saleDate').value=today();save();alert('बिक्री सेव हो गई।')};
+$('expenseForm').onsubmit=e=>{e.preventDefault();db.expenses.push({id:Date.now(),date:$('expDate').value,category:$('expCategory').value,note:$('expNote').value,amount:num($('expAmount').value)});e.target.reset();$('expDate').value=today();save();alert('खर्च सेव हो गया।')};
+$('purchaseForm').onsubmit=e=>{e.preventDefault();let amount=num($('purAmount').value),paid=num($('purPaid').value);if(paid>amount)return alert('भुगतान खरीद से ज्यादा नहीं हो सकता।');db.purchases.push({id:Date.now(),date:$('purDate').value,supplier:$('purSupplier').value.trim(),item:$('purItem').value,qty:num($('purQty').value),unit:$('purUnit').value,amount,paid});e.target.reset();$('purDate').value=today();save();alert('खरीद सेव हो गई।')};
+$('payForm').onsubmit=e=>{e.preventDefault();db.payments.push({id:Date.now(),date:$('payDate').value,supplier:$('paySupplier').value.trim(),amount:num($('payAmount').value),mode:$('payMode').value,note:$('payNote').value});e.target.reset();$('payDate').value=today();save();alert('भुगतान दर्ज हो गया।')};
+$('workerForm').onsubmit=e=>{e.preventDefault();db.workers.push({id:Date.now(),name:$('workerName').value.trim(),rate:num($('workerRate').value)});e.target.reset();save();alert('कर्मचारी जोड़ दिया गया।')};
+$('wageWorker').onchange=()=>{let w=db.workers.find(x=>x.id==$('wageWorker').value);if(w)$('wageEarned').value=w.rate*num($('wageDays').value||1)};
+$('wageDays').oninput=$('wageWorker').onchange;
+$('wageForm').onsubmit=e=>{e.preventDefault();let earned=num($('wageEarned').value),paid=num($('wagePaid').value);if(paid>earned)return alert('भुगतान बनी मजदूरी से ज्यादा है।');db.wages.push({id:Date.now(),date:$('wageDate').value,workerId:Number($('wageWorker').value),days:num($('wageDays').value),earned,paid});e.target.reset();$('wageDate').value=today();save();alert('मजदूरी दर्ज हो गई।')};
+$('stockForm').onsubmit=e=>{e.preventDefault();db.stocks.push({id:Date.now(),date:$('stockDate').value,type:$('stockType').value,value:num($('stockValue').value)});e.target.reset();$('stockDate').value=today();save();alert('स्टॉक मूल्य सेव हो गया।')};
+function supplierBalances(){let names=[...new Set([...db.purchases.map(x=>x.supplier),...db.payments.map(x=>x.supplier)])];return names.map(name=>({name,bought:sum(db.purchases.filter(x=>x.supplier===name),x=>x.amount),paidAtPurchase:sum(db.purchases.filter(x=>x.supplier===name),x=>x.paid),paidLater:sum(db.payments.filter(x=>x.supplier===name),x=>x.amount)})).map(x=>({...x,balance:x.bought-x.paidAtPurchase-x.paidLater}))}
+function workerBalances(){return db.workers.map(w=>({ ...w,earned:sum(db.wages.filter(x=>x.workerId===w.id),x=>x.earned),paid:sum(db.wages.filter(x=>x.workerId===w.id),x=>x.paid)}))}
+function table(headers,rows){if(!rows.length)return '<div class="empty">अभी कोई रिकॉर्ड नहीं है।</div>';return '<table><thead><tr>'+headers.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table>'}
+function renderAll(){
+let t=today(),m=monthNow(),todaySales=sum(db.sales.filter(x=>x.date===t),x=>x.amount),todayExp=sum(db.expenses.filter(x=>x.date===t),x=>x.amount)+sum(db.wages.filter(x=>x.date===t),x=>x=>0);
+todayExp=sum(db.expenses.filter(x=>x.date===t),x=>x.amount)+sum(db.wages.filter(x=>x.date===t),x=>x.paid);
+$('todayLabel').textContent=new Date().toLocaleDateString('hi-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+$('kSales').textContent=money(todaySales);$('kExpense').textContent=money(todayExp);
+let ms=db.sales.filter(x=>inMonth(x,m)),mp=db.purchases.filter(x=>inMonth(x,m)),me=db.expenses.filter(x=>inMonth(x,m)),mw=db.wages.filter(x=>inMonth(x,m));
+let turnover=sum(ms,x=>x.amount),purchase=sum(mp,x=>x.amount),expense=sum(me.filter(x=>x.category!=='मालिक की निजी निकासी'),x=>x.amount),wage=sum(mw,x=>x.earned);
+$('kTurnover').textContent=money(turnover);$('kProfit').textContent=money(turnover-purchase-expense-wage);
+$('mSales').textContent=money(turnover);$('mPurchases').textContent=money(purchase);$('mExpenses').textContent=money(expense+wage);$('mPayable').textContent=money(sum(supplierBalances(),x=>Math.max(0,x.balance)));
+$('recent').innerHTML=table(['तारीख','प्रकार','विवरण','रकम'],[
+...db.sales.slice(-4).map(x=>`<tr><td>${x.date}</td><td>बिक्री</td><td>दैनिक बिक्री</td><td>${money(x.amount)}</td></tr>`),
+...db.expenses.slice(-4).map(x=>`<tr><td>${x.date}</td><td>खर्च</td><td>${esc(x.category)} ${esc(x.note)}</td><td>${money(x.amount)}</td></tr>`)
+].slice(-7).reverse());
+$('dailyTable').innerHTML=table(['तारीख','बिक्री','अन्य खर्च','मजदूरी भुगतान'],[...new Set([...db.sales.map(x=>x.date),...db.expenses.map(x=>x.date),...db.wages.map(x=>x.date)])].sort().reverse().map(d=>`<tr><td>${d}</td><td>${money(sum(db.sales.filter(x=>x.date===d),x=>x.amount))}</td><td>${money(sum(db.expenses.filter(x=>x.date===d),x=>x.amount))}</td><td>${money(sum(db.wages.filter(x=>x.date===d),x=>x.paid))}</td></tr>`));
+let balances=supplierBalances();$('supplierList').innerHTML=balances.map(x=>`<option value="${esc(x.name)}">`).join('');
+$('supplierSummary').innerHTML=table(['दुकानदार','कुल खरीद','कुल भुगतान','बाकी'],balances.map(x=>`<tr><td>${esc(x.name)}</td><td>${money(x.bought)}</td><td>${money(x.paidAtPurchase+x.paidLater)}</td><td class="${x.balance>0?'red':'green'}">${money(x.balance)}</td></tr>`));
+let tx=[...db.purchases.map(x=>({...x,type:'खरीद',detail:x.item,paid:x.paid})),...db.payments.map(x=>({...x,type:'भुगतान',detail:x.mode,paid:x.amount}))].sort((a,b)=>b.date.localeCompare(a.date));
+$('supplierTable').innerHTML=table(['तारीख','दुकानदार','प्रकार','विवरण','रकम'],tx.map(x=>`<tr><td>${x.date}</td><td>${esc(x.supplier)}</td><td>${x.type}</td><td>${esc(x.detail)}</td><td>${money(x.amount||x.paid)}</td></tr>`));
+$('wageWorker').innerHTML=db.workers.map(w=>`<option value="${w.id}">${esc(w.name)}</option>`).join('')||'<option value="">पहले कर्मचारी जोड़ें</option>';
+$('workerSummary').innerHTML=table(['कर्मचारी','मजदूरी बनी','भुगतान','बाकी'],workerBalances().map(x=>`<tr><td>${esc(x.name)}</td><td>${money(x.earned)}</td><td>${money(x.paid)}</td><td>${money(x.earned-x.paid)}</td></tr>`));
+$('wageTable').innerHTML=table(['तारीख','कर्मचारी','दिन','मजदूरी बनी','भुगतान'],db.wages.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<tr><td>${x.date}</td><td>${esc(db.workers.find(w=>w.id===x.workerId)?.name||'')}</td><td>${x.days}</td><td>${money(x.earned)}</td><td>${money(x.paid)}</td></tr>`));
+$('stockTable').innerHTML=table(['तारीख','प्रकार','मूल्य'],db.stocks.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<tr><td>${x.date}</td><td>${x.type==='opening'?'शुरुआती':'अंतिम'} स्टॉक</td><td>${money(x.value)}</td></tr>`));
+$('dataInfo').textContent=`बिक्री ${db.sales.length} · खर्च ${db.expenses.length} · खरीद ${db.purchases.length} · भुगतान ${db.payments.length} · कर्मचारी ${db.workers.length} · मजदूरी एंट्री ${db.wages.length}`;
+drawSales();
+}
+function drawBars(canvas,labels,a,b){let c=$(canvas),ctx=c.getContext('2d'),w=c.clientWidth||500,h=220,dpr=devicePixelRatio||1;c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);let max=Math.max(1,...a,...(b||[])),left=38,bottom=30,top=14,plotH=h-top-bottom,step=(w-left-10)/labels.length;ctx.font='11px system-ui';ctx.fillStyle='#748078';ctx.strokeStyle='#e7eee9';for(let j=0;j<4;j++){let y=top+plotH*j/3;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-6,y);ctx.stroke()}labels.forEach((l,i)=>{let x=left+i*step+step*.18,bw=Math.min(22,step*.28),v=a[i]||0;ctx.fillStyle='#258263';ctx.fillRect(x,top+plotH-v/max*plotH,bw,v/max*plotH);if(b){let v2=b[i]||0;ctx.fillStyle='#e1a13a';ctx.fillRect(x+bw+3,top+plotH-v2/max*plotH,bw,v2/max*plotH)}ctx.fillStyle='#687770';ctx.textAlign='center';ctx.fillText(l,x+bw/2, h-9)})}
+function drawSales(){let labels=[],vals=[];for(let i=6;i>=0;i--){let d=new Date();d.setDate(d.getDate()-i);let key=d.toISOString().slice(0,10);labels.push(d.toLocaleDateString('hi-IN',{day:'numeric',month:'short'}));vals.push(sum(db.sales.filter(x=>x.date===key),x=>x.amount))}drawBars('salesChart',labels,vals)}
+function renderReports(){let m=$('reportMonth').value||monthNow(),sales=db.sales.filter(x=>inMonth(x,m)),purs=db.purchases.filter(x=>inMonth(x,m)),exps=db.expenses.filter(x=>inMonth(x,m)),wages=db.wages.filter(x=>inMonth(x,m));let turnover=sum(sales,x=>x.amount),purchases=sum(purs,x=>x.amount),other=sum(exps.filter(x=>x.category!=='मालिक की निजी निकासी'),x=>x.amount),labour=sum(wages,x=>x.earned);
+let opening=db.stocks.filter(x=>x.type==='opening'&&x.date.slice(0,7)===m).slice(-1)[0]?.value,closing=db.stocks.filter(x=>x.type==='closing'&&x.date.slice(0,7)===m).slice(-1)[0]?.value;
+let cogs=opening!==undefined&&closing!==undefined?opening+purchases-closing:purchases,gross=turnover-cogs,net=gross-other-labour;
+$('rSales').textContent=money(turnover);$('rCogs').textContent=money(cogs);$('rGross').textContent=money(gross);$('rNet').textContent=money(net);
+$('pnlRows').innerHTML=[['कुल बिक्री / Turnover',turnover],['शुरुआती स्टॉक',opening??'दर्ज नहीं'],['माल की खरीद',purchases],['अंतिम स्टॉक',closing??'दर्ज नहीं'],['माल की लागत / COGS',cogs],['Gross Profit',gross],['कर्मचारी मजदूरी',labour],['अन्य संचालन खर्च',other],['Net Profit / अनुमान',net]].map((x,i)=>`<div class="splitline ${[5,8].includes(i)?'total':''}"><span>${x[0]}</span><b>${typeof x[1]==='number'?money(x[1]):x[1]}</b></div>`).join('');
+$('ratios').innerHTML=[['Gross Margin',turnover?gross/turnover*100:0],['Net Margin',turnover?net/turnover*100:0],['मजदूरी / बिक्री',turnover?labour/turnover*100:0],['अन्य खर्च / बिक्री',turnover?other/turnover*100:0]].map(x=>`<div style="margin:12px 0"><div class="row"><span>${x[0]}</span><b>${x[1].toFixed(1)}%</b></div><div class="bar"><span style="width:${Math.min(100,Math.max(0,x[1]))}%"></span></div></div>`).join('');
+$('reportExtra').innerHTML=`<div class="splitline"><span>सप्लायर को इस महीने भुगतान</span><b>${money(sum(db.payments.filter(x=>inMonth(x,m)),x=>x.amount)+sum(purs,x=>x.paid))}</b></div><div class="splitline"><span>महीने के अंत सप्लायर बकाया (सभी अवधि)</span><b>${money(sum(supplierBalances(),x=>Math.max(0,x.balance)))}</b></div><div class="splitline"><span>मजदूरी भुगतान</span><b>${money(sum(wages,x=>x.paid))}</b></div><div class="hint">सप्लायर भुगतान P&amp;L खर्च नहीं है; खरीद की लागत अलग दर्ज है। निजी निकासी को बिजनेस खर्च नहीं माना गया है।</div>`;
+let days=[...new Set([...sales.map(x=>x.date),...exps.map(x=>x.date)])].sort();drawBars('monthChart',days.slice(-12).map(x=>x.slice(8)),days.slice(-12).map(d=>sum(sales.filter(x=>x.date===d),x=>x.amount)),days.slice(-12).map(d=>sum(exps.filter(x=>x.date===d),x=>x.amount)));
+}
+function backup(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='yadav-hotel-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)}
+function restore(){let f=$('restoreFile').files[0];if(!f)return alert('पहले बैकअप फाइल चुनें।');let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!confirm('मौजूदा डेटा की जगह बैकअप लोड करना है? पहले वर्तमान डेटा का बैकअप लें।'))return;db={...blank(),...x};save();alert('बैकअप लोड हो गया।')}catch(e){alert('यह बैकअप फाइल सही नहीं है।')}};r.readAsText(f)}
+function exportCSV(){let m=$('reportMonth').value||monthNow(),rows=[['प्रकार','तारीख','विवरण','रकम'],...db.sales.filter(x=>inMonth(x,m)).map(x=>['बिक्री',x.date,'कुल बिक्री',x.amount]),...db.expenses.filter(x=>inMonth(x,m)).map(x=>['खर्च',x.date,x.category+' '+x.note,x.amount]),...db.purchases.filter(x=>inMonth(x,m)).map(x=>['खरीद',x.date,x.supplier+' - '+x.item,x.amount]),...db.payments.filter(x=>inMonth(x,m)).map(x=>['सप्लायर भुगतान',x.date,x.supplier,x.amount]),...db.wages.filter(x=>inMonth(x,m)).map(x=>['मजदूरी',x.date,db.workers.find(w=>w.id===x.workerId)?.name||'',x.earned])];let csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n'),blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='yadav-hotel-'+m+'.csv';a.click();URL.revokeObjectURL(a.href)}
+window.addEventListener('resize',()=>{drawSales();if($('reports').classList.contains('active'))renderReports()});
+renderAll();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+
+</body></html>
