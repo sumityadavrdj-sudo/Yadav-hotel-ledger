@@ -1,13 +1,13 @@
 {
-  "id": "./yadav_hotel_ledger_new-1-1.html",
-  "name": "Yadav Hotel Hisab-Kitab",
+  "id": "./",
+  "name": "Yadav Hotel Business Ledger",
   "short_name": "Yadav Ledger",
   "description": "Yadav Hotel ka daily hisab-kitab",
   "start_url": "./yadav_hotel_ledger_new-1-1.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f3f6f4",
-  "theme_color": "#123c32",
+  "background_color": "#f3f7f4",
+  "theme_color": "#087443",
   "lang": "hi",
   "icons": [
     {
